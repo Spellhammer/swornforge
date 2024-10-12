@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwornForge</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="engine.js"></script>
+</head>
+<body>
+    <div class="sworn-forge-asset-creator" x-data="swornForgeAssetCreator()">
+        <div class="controls">
+            <label>
+                Asset Name
+                <input type="text" x-model="options.assetName">
+            </label>
+            <label>
+                Include Name Fill-in
+                <input type="checkbox" :checked="options.name" x-model="options.name">
+            </label>
+            <label>
+                Include Health/Resource Track
+                <input type="checkbox" :checked="options.track" x-model="options.track">
+            </label>
+            <label>
+                Max Health/Resource
+                <input type="number" min="1" :max="staticOptions.maxTrackSize" x-model.number="options.trackMax">
+            </label>
+            <label>
+                Type
+                <select x-model="options.type">
+                    <template x-for="option in staticOptions.builtinTypes" :key="option">
+                        <option x-text="option"></option>
+                    </template>
+                </select>
+            </label>
+            <label x-show="options.type == 'Custom'">
+                Custom Type Name
+                <input type="text" x-model="options.customType">
+            </label>
+            <div class="repeater-container">
+                <template x-for="(power, index) in powers">
+                    <div>
+                        <label>
+                            Power Title
+                            <input type="text" x-model="power.title">
+                        </label>
+                        <label>
+                            Unlocked
+                            <input type="checkbox" x-model="power.unlocked">
+                        </label>
+                        <label>
+                            Power Description
+                            <textarea x-model="power.description"></textarea>
+                        </label>
+                        <button x-on:click="powers.splice(index, 1)">Remove</button>
+                    </div>
+                </template>
+                <button x-on:click="powers.push({title: 'New Power', unlocked: false, description: 'Something awesome that this power does.'})">Add Power</button>
+            </div>
+        </div>
+            <div class="asset-card" type="companion">
+                <div class="asset-card__header">
+                <p class="asset-card__type" x-text="options.type != 'Custom' ? options.type : options.customType">Companion</p>
+                <img class="asset-card__icon" />
+                </div>
+                <div class="asset-card__body">
+                <p class="asset-card__title" x-text="options.assetName">Cave Lion</p>
+                <div class="asset-card__name-wrapper" x-show="options.name">
+                    <p>Name:</p>
+                </div>
+                <div class="asset-card__description-wrapper">
+                    <p x-text="options.description">Your cat takes down its prey.</p>
+                </div>
+                <ul class="asset-card__powers-list">
+                    <template x-for="power in powers">
+                        <li :class="{unlocked: power.unlocked}"><strong x-text="power.title"></strong>: <span x-text="power.description"></span></li>
+                    </template>
+                </ul>
+                <div x-show="options.track" class="asset-card__companion-track-wrapper">
+                    <template x-for="i in Array.from({length: options.trackMax}, (v, k) => k)">
+                        <p class="asset-card__companion-track-cell" x-text="'+' + i"></p>
+                    </template>
+                    <template x-for="6 in Array.from({length: staticOptions.maxTrackSize - options.trackMax}, (v, k) => k)">
+                        <p class="asset-card__companion-track-cell-placeholder"></p>
+                    </template>
+                </div>
+                </div>
+            </div>       
+        </div>
+    </div>
+</body>
+</html>

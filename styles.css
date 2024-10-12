@@ -1,0 +1,118 @@
+.sworn-forge-asset-creator {
+    display: flex;
+    flex-direction: row;
+}
+
+.asset-card {
+    width: 400px;
+    border: 2px solid black;
+  }
+  
+  .asset-card p {
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+  }
+  
+  .asset-card__header {
+    display: flex;
+    padding: 18px 12px 8px 12px;
+    background: black;
+    color: white;
+  }
+  
+  .asset-card__type {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+  
+  .asset-card__body {
+    display: grid;
+    padding: 12px;
+    gap: 8px;
+  }
+  
+  .asset-card__title {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .asset-card__name-wrapper {
+    border-bottom: 1px solid black;
+    width: 100%;
+  }
+  
+  .asset-card__powers-list {
+    list-style-type: circle;
+    padding-inline-start: 16px;
+  }
+
+  .asset-card__powers-list li {
+    list-style-type: "⃝";
+    padding-inline-start: 1ch;
+  }
+
+  .asset-card__powers-list li::marker {
+    font-size: 0.75rem;
+  }
+
+  .asset-card__powers-list li.unlocked {
+    list-style-type: "⏺";
+  }
+
+  .asset-card__powers-list li.unlocked::marker {
+    font-size: 1rem;
+    line-height: 0.5;
+  }
+  
+  .asset-card__powers-list li:not(:last-child) {
+    margin-bottom: 12px;
+  }
+  
+  .asset-card__companion-track-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .asset-card__companion-track-wrapper p {
+    padding: 8px 16px;
+    border: 1px solid black;
+  }
+  
+  .asset-card__companion-track-wrapper p:not(:last-of-type) {
+    border-right: none;
+  }
+
+  .asset-card__companion-track-cell-placeholder {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .asset-card__companion-track-cell-placeholder:before {
+    content: "";
+    position: absolute;
+    display: block;
+    background: black;
+    height: 1px;
+    width: 150px;
+    rotate: -45deg;
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .controls .repeater-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
