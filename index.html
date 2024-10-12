@@ -9,26 +9,29 @@
     <script src="engine.js"></script>
 </head>
 <body>
-    <div class="sworn-forge-asset-creator" x-data="swornForgeAssetCreator()">
+    <div 
+        class="sworn-forge-asset-creator" 
+        x-data="swornForgeAssetCreator()"
+        x-init="transformers.italicizeMoveNames()">
         <div class="controls">
             <label>
-                Asset Name
+                <span>Asset Name</span>
                 <input type="text" x-model="options.assetName">
             </label>
             <label>
-                Include Name Fill-in
+                <span>Include Name Fill-in</span>
                 <input type="checkbox" :checked="options.name" x-model="options.name">
             </label>
             <label>
-                Include Health/Resource Track
+                <span>Include Health/Resource Track</span>
                 <input type="checkbox" :checked="options.track" x-model="options.track">
             </label>
             <label>
-                Max Health/Resource
+                <span>Max Health/Resource</span>
                 <input type="number" min="1" :max="staticOptions.maxTrackSize" x-model.number="options.trackMax">
             </label>
             <label>
-                Type
+                <span>Type</span>
                 <select x-model="options.type">
                     <template x-for="option in staticOptions.builtinTypes" :key="option">
                         <option x-text="option"></option>
@@ -36,21 +39,21 @@
                 </select>
             </label>
             <label x-show="options.type == 'Custom'">
-                Custom Type Name
+                <span>Custom Type Name</span>
                 <input type="text" x-model="options.customType">
             </label>
             <div class="repeater-container">
                 <template x-for="(power, index) in powers">
                     <div>
-                        <label>
+                        <label class="control">
                             Power Title
                             <input type="text" x-model="power.title">
                         </label>
-                        <label>
+                        <label class="control">
                             Unlocked
                             <input type="checkbox" x-model="power.unlocked">
                         </label>
-                        <label>
+                        <label class="control--vertical">
                             Power Description
                             <textarea x-model="power.description"></textarea>
                         </label>
@@ -60,6 +63,7 @@
                 <button x-on:click="powers.push({title: 'New Power', unlocked: false, description: 'Something awesome that this power does.'})">Add Power</button>
             </div>
         </div>
+        <div class="asset-card-wrapper">
             <div class="asset-card" type="companion">
                 <div class="asset-card__header">
                 <p class="asset-card__type" x-text="options.type != 'Custom' ? options.type : options.customType">Companion</p>
@@ -75,7 +79,7 @@
                 </div>
                 <ul class="asset-card__powers-list">
                     <template x-for="power in powers">
-                        <li :class="{unlocked: power.unlocked}"><strong x-text="power.title"></strong>: <span x-text="power.description"></span></li>
+                        <li :class="{unlocked: power.unlocked}" x-html="'<strong>' + power.title + '</strong>: ' + transformers.italicizeMoveNames(power.description, moves)"></li>
                     </template>
                 </ul>
                 <div x-show="options.track" class="asset-card__companion-track-wrapper">
@@ -87,7 +91,8 @@
                     </template>
                 </div>
                 </div>
-            </div>       
+            </div>  
+        </div>     
         </div>
     </div>
 </body>

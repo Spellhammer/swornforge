@@ -36,7 +36,23 @@ let swornForgeAssetCreator = function() {
                 unlocked: false,
                 description: "When you Make Camp, your cat is alert to trouble. If you or an ally choose to relax, take +1 spirit. If you focus, take +1 momentum."
             }
-        ]
+        ],
+        moves: [
+            "Resupply",
+            "Enter the Fray",
+            "Strike",
+            "Make Camp"
+        ],
+        transformers: {
+            italicizeMoveNames: function( string, moves ) {
+                moves.forEach( move => {
+                    const regex = new RegExp(`\\b${move}\\b`, 'g');
+                    string = string.replace(regex, `<i>${move}</i>`);
+                } );
+
+                return string;
+            }
+        }
     }
 
     return app;

@@ -106,13 +106,31 @@
   .controls {
     display: flex;
     flex-direction: column;
-    max-width: 300px;
+    max-width: 500px;
     gap: 8px;
     padding: 16px;
+  }
+
+  .controls label {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 8px;
+    border: 1px solid #EFEFEF;
+  }
+
+  .controls label.control--vertical {
+    grid-template-columns: 1fr;
   }
 
   .controls .repeater-container {
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
+
+  .controls .repeater-container div {
+    display: grid;
+    border: 1px solid #EFEFEF;
+    padding: 8px;
+    gap: 8px;
   }
