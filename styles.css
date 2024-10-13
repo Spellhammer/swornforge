@@ -1,10 +1,23 @@
 .sworn-forge-asset-creator {
     display: flex;
     flex-direction: row;
+    gap: 32px;
+}
+
+.asset-card-safety-zone {
+    width: 405px;
+    height: 565px;
+    border: 2px dashed black;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+    position: sticky;
+    top: 12px;
 }
 
 .asset-card {
     width: 400px;
+    aspect-ratio: 2 / 2.8;
     border: 2px solid black;
   }
   
@@ -47,17 +60,8 @@
     padding-inline-start: 16px;
   }
 
-  .asset-card__powers-list li {
-    list-style-type: "⃝";
-    padding-inline-start: 1ch;
-  }
-
-  .asset-card__powers-list li::marker {
-    font-size: 0.75rem;
-  }
-
   .asset-card__powers-list li.unlocked {
-    list-style-type: "⏺";
+    list-style-type: disc;
   }
 
   .asset-card__powers-list li.unlocked::marker {
@@ -109,13 +113,14 @@
     max-width: 500px;
     gap: 8px;
     padding: 16px;
+    background: #efefef;
   }
 
   .controls label {
     display: grid;
     grid-template-columns: 2fr 1fr;
     padding: 8px;
-    border: 1px solid #EFEFEF;
+    border: 1px solid #e0e0e0;
   }
 
   .controls label.control--vertical {
@@ -130,7 +135,12 @@
 
   .controls .repeater-container div {
     display: grid;
-    border: 1px solid #EFEFEF;
     padding: 8px;
     gap: 8px;
+    background: #E0E0E0;
+  }
+
+  .controls textarea {
+    height: 100px;
+    resize: none;
   }

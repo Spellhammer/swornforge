@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="engine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div 
@@ -17,6 +18,10 @@
             <label>
                 <span>Asset Name</span>
                 <input type="text" x-model="options.assetName">
+            </label>
+            <label>
+                <span>Asset Description</span>
+                <input type="text" x-model="options.description">
             </label>
             <label>
                 <span>Include Name Fill-in</span>
@@ -60,39 +65,45 @@
                         <button x-on:click="powers.splice(index, 1)">Remove</button>
                     </div>
                 </template>
-                <button x-on:click="powers.push({title: 'New Power', unlocked: false, description: 'Something awesome that this power does.'})">Add Power</button>
+                <button @click="powers.push({title: 'New Power', unlocked: false, description: 'Something awesome that this power does.'})">Add Power</button>
             </div>
         </div>
         <div class="asset-card-wrapper">
-            <div class="asset-card" type="companion">
-                <div class="asset-card__header">
-                <p class="asset-card__type" x-text="options.type != 'Custom' ? options.type : options.customType">Companion</p>
-                <img class="asset-card__icon" />
-                </div>
-                <div class="asset-card__body">
-                <p class="asset-card__title" x-text="options.assetName">Cave Lion</p>
-                <div class="asset-card__name-wrapper" x-show="options.name">
-                    <p>Name:</p>
-                </div>
-                <div class="asset-card__description-wrapper">
-                    <p x-text="options.description">Your cat takes down its prey.</p>
-                </div>
-                <ul class="asset-card__powers-list">
-                    <template x-for="power in powers">
-                        <li :class="{unlocked: power.unlocked}" x-html="'<strong>' + power.title + '</strong>: ' + transformers.italicizeMoveNames(power.description, moves)"></li>
-                    </template>
-                </ul>
-                <div x-show="options.track" class="asset-card__companion-track-wrapper">
-                    <template x-for="i in Array.from({length: options.trackMax}, (v, k) => k)">
-                        <p class="asset-card__companion-track-cell" x-text="'+' + i"></p>
-                    </template>
-                    <template x-for="6 in Array.from({length: staticOptions.maxTrackSize - options.trackMax}, (v, k) => k)">
-                        <p class="asset-card__companion-track-cell-placeholder"></p>
-                    </template>
-                </div>
-                </div>
-            </div>  
+            <div class="asset-card-safety-zone">
+                <div class="asset-card" type="companion">
+                    <div class="asset-card__header">
+                        <p class="asset-card__type" x-text="options.type != 'Custom' ? options.type : options.customType">Companion</p>
+                        <img class="asset-card__icon" />
+                    </div>
+                    <div class="asset-card__body">
+                        <p class="asset-card__title" x-text="options.assetName">Cave Lion</p>
+                        <div class="asset-card__name-wrapper" x-show="options.name">
+                            <p>Name:</p>
+                        </div>
+                        <div class="asset-card__description-wrapper" x-show="options.description !== ''">
+                            <p x-text="options.description">Your cat takes down its prey.</p>
+                        </div>
+                        <ul class="asset-card__powers-list">
+                            <template x-for="power in powers">
+                                <li :class="{unlocked: power.unlocked}" x-html="'<strong>' + power.title + '</strong> ' + transformers.italicizeMoveNames(power.description, moves)"></li>
+                            </template>
+                        </ul>
+                        <div x-show="options.track" class="asset-card__companion-track-wrapper">
+                            <template x-for="i in Array.from({length: options.trackMax}, (v, k) => k)">
+                                <p class="asset-card__companion-track-cell" x-text="'+' + i"></p>
+                            </template>
+                            <template x-for="6 in Array.from({length: staticOptions.maxTrackSize - options.trackMax}, (v, k) => k)">
+                                <p class="asset-card__companion-track-cell-placeholder" data-html2canvas-ignore></p>
+                            </template>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
         </div>     
+        <div class="sworn-forge-download-container">
+            <button @click="methods.download(document.querySelector('.asset-card'))">Generate Image</button>
+            <div id="output"></div>
+            <p>Right-click to save or copy this image.</p>
         </div>
     </div>
 </body>
