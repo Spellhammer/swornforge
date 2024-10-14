@@ -24,17 +24,23 @@ let swornForgeAssetCreator = function() {
             {
                 title: "Eager:",
                 unlocked: false,
-                description: "When your cat chases down big game, you may Resupply with +edge (instead of +wits). If you do, take +1 supply or +1 momentum on a strong hit."
+                description: "When your cat chases down big game, you may Resupply with +edge (instead of +wits). If you do, take +1 supply or +1 momentum on a strong hit.",
+                fillin: false,
+                fillinTitle: "Fill-in:"
             },
             {
                 title: "Inescapable:",
                 unlocked: false,
-                description: "When you Enter the Fray or Strike by sending your cat to attack, roll +edge. On a hit, take +2 momentum."
+                description: "When you Enter the Fray or Strike by sending your cat to attack, roll +edge. On a hit, take +2 momentum.",
+                fillin: false,
+                fillinTitle: "Fill-in:"
             },
             {
                 title: "Protective:",
                 unlocked: false,
-                description: "When you Make Camp, your cat is alert to trouble. If you or an ally choose to relax, take +1 spirit. If you focus, take +1 momentum."
+                description: "When you Make Camp, your cat is alert to trouble. If you or an ally choose to relax, take +1 spirit. If you focus, take +1 momentum.",
+                fillin: false,
+                fillinTitle: "Fill-in:"
             }
         ],
         moves: [
@@ -106,6 +112,10 @@ let swornForgeAssetCreator = function() {
                     output.innerHTML = '';
                     output.appendChild(canvas);
                 });
+            },
+            save: function( options, powers ) {
+                console.dir( options );
+                console.dir( powers );
             }
         }
     }

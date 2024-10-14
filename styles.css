@@ -50,9 +50,14 @@
     font-weight: bold;
   }
   
-  .asset-card__name-wrapper {
+  .asset-card__fillin-wrapper {
     border-bottom: 1px solid black;
     width: 100%;
+  }
+
+  li .asset-card__fillin-wrapper {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
   }
   
   .asset-card__powers-list {
@@ -106,7 +111,12 @@
     rotate: -45deg;
   }
 
-  /* Controls */
+  .controls {
+    width: 350px;
+    display: grid;
+  }
+
+  /* Controls
   .controls {
     display: flex;
     flex-direction: column;
@@ -143,4 +153,4 @@
   .controls textarea {
     height: 100px;
     resize: none;
-  }
+  } */

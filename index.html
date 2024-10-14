@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwornForge</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="vanillaui.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="engine.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15,58 +16,73 @@
         x-data="swornForgeAssetCreator()"
         x-init="transformers.italicizeMoveNames()">
         <div class="controls">
-            <label>
-                <span>Asset Name</span>
-                <input type="text" x-model="options.assetName">
-            </label>
-            <label>
-                <span>Asset Description</span>
-                <input type="text" x-model="options.description">
-            </label>
-            <label>
-                <span>Include Name Fill-in</span>
-                <input type="checkbox" :checked="options.name" x-model="options.name">
-            </label>
-            <label>
-                <span>Include Health/Resource Track</span>
-                <input type="checkbox" :checked="options.track" x-model="options.track">
-            </label>
-            <label>
-                <span>Max Health/Resource</span>
-                <input type="number" min="1" :max="staticOptions.maxTrackSize" x-model.number="options.trackMax">
-            </label>
-            <label>
-                <span>Type</span>
-                <select x-model="options.type">
-                    <template x-for="option in staticOptions.builtinTypes" :key="option">
-                        <option x-text="option"></option>
+            <fieldset>
+                <legend>Asset Options</legend>
+                <label>
+                    <span>Asset Name</span>
+                    <input type="text" x-model="options.assetName">
+                </label>
+                <label>
+                    <span>Asset Description</span>
+                    <input type="text" x-model="options.description">
+                </label>
+                <label>
+                    <span>Include Name Fill-in</span>
+                    <input type="checkbox" :checked="options.name" x-model="options.name">
+                </label>
+                <label>
+                    <span>Include Health/Resource Track</span>
+                    <input type="checkbox" :checked="options.track" x-model="options.track">
+                </label>
+                <label>
+                    <span>Max Health/Resource</span>
+                    <input type="number" min="1" :max="staticOptions.maxTrackSize" x-model.number="options.trackMax">
+                </label>
+                <label>
+                    <span>Type</span>
+                    <select x-model="options.type">
+                        <template x-for="option in staticOptions.builtinTypes" :key="option">
+                            <option x-text="option"></option>
+                        </template>
+                    </select>
+                </label>
+                <label x-show="options.type == 'Custom'">
+                    <span>Custom Type Name</span>
+                    <input type="text" x-model="options.customType">
+                </label>
+            </fieldset>
+            <fieldset>
+                <legend>Power List</legend>
+                <div class="repeater-container">
+                    <template x-for="(power, index) in powers">
+                        <fieldset>
+                            <legend>Power</legend>
+                            <label class="control">
+                                <span>Power Title</span>
+                                <input type="text" x-model="power.title">
+                            </label>
+                            <label class="control">
+                                <span>Unlocked</span>
+                                <input type="checkbox" x-model="power.unlocked">
+                            </label>
+                            <label class="control--vertical">
+                                <span>Power Description</span>
+                                <textarea x-model="power.description"></textarea>
+                            </label>
+                            <label>
+                                <span>Fill-in</span>
+                                <input type="checkbox" x-model="power.fillin">
+                            </label>
+                            <label x-show="power.fillin">
+                                <span>Fill-in Title</span>
+                                <input type="text" x-model="power.fillinTitle">
+                            </label>
+                            <button x-on:click="powers.splice(index, 1)">Remove</button>
+                        </fieldset>
                     </template>
-                </select>
-            </label>
-            <label x-show="options.type == 'Custom'">
-                <span>Custom Type Name</span>
-                <input type="text" x-model="options.customType">
-            </label>
-            <div class="repeater-container">
-                <template x-for="(power, index) in powers">
-                    <div>
-                        <label class="control">
-                            Power Title
-                            <input type="text" x-model="power.title">
-                        </label>
-                        <label class="control">
-                            Unlocked
-                            <input type="checkbox" x-model="power.unlocked">
-                        </label>
-                        <label class="control--vertical">
-                            Power Description
-                            <textarea x-model="power.description"></textarea>
-                        </label>
-                        <button x-on:click="powers.splice(index, 1)">Remove</button>
-                    </div>
-                </template>
-                <button @click="powers.push({title: 'New Power', unlocked: false, description: 'Something awesome that this power does.'})">Add Power</button>
-            </div>
+                    <button @click="powers.push({title: 'New Power', unlocked: false, description: 'Something awesome that this power does.'})">Add Power</button>
+                </div>
+            </fieldset>
         </div>
         <div class="asset-card-wrapper">
             <div class="asset-card-safety-zone">
@@ -77,15 +93,17 @@
                     </div>
                     <div class="asset-card__body">
                         <p class="asset-card__title" x-text="options.assetName">Cave Lion</p>
-                        <div class="asset-card__name-wrapper" x-show="options.name">
-                            <p>Name:</p>
-                        </div>
+                        <p class="asset-card__fillin-wrapper" x-show="options.name">Name:</p>
                         <div class="asset-card__description-wrapper" x-show="options.description !== ''">
                             <p x-text="options.description">Your cat takes down its prey.</p>
                         </div>
                         <ul class="asset-card__powers-list">
                             <template x-for="power in powers">
-                                <li :class="{unlocked: power.unlocked}" x-html="'<strong>' + power.title + '</strong> ' + transformers.italicizeMoveNames(power.description, moves)"></li>
+                                <li :class="{unlocked: power.unlocked}">
+                                    <strong x-text="power.title"></strong><span x-html="' ' +transformers.italicizeMoveNames(power.description, moves)"></span>
+                                    <br x-show="power.fillin">
+                                    <p class="asset-card__fillin-wrapper" x-show="power.fillin" x-text="power.fillinTitle"></p>
+                                </li>
                             </template>
                         </ul>
                         <div x-show="options.track" class="asset-card__companion-track-wrapper">

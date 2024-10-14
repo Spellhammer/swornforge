@@ -1,0 +1,103 @@
+:root {
+    /* Numbers */
+    --vui-global-outer-padding: 8px;
+    --vui-global-inner-padding: 4px;
+    --vui-global-outer-border-radius: 8px;
+    --vui-global-inner-border-radius: 4px;
+    --vui-global-gap: 16px;
+    --vui-global-gap--medium: 8px;
+    --vui-global-gap--small: 4px;
+
+    /* Colors */
+    --vui-global-font-color: black;
+    --vui-global-muted-color: #cecece;
+}
+
+fieldset {
+    display: grid;
+    gap: var(--vui-global-gap--medium);
+    margin-inline-start: var(--vui-global-gap--small);
+    margin-inline-end: var(--vui-global-gap--small);
+    padding-block-start: var(--vui-global-outer-padding);
+    padding-inline-start: var(--vui-global-outer-padding);;
+    padding-inline-end: var(--vui-global-outer-padding);;
+    padding-block-end: var(--vui-global-outer-padding);
+    border-radius: var(--vui-global-inner-border-radius);
+    min-inline-size: min-content;
+    border-width: 1px;
+    border-style: groove;
+    border-color: var(--vui-global-muted-color);
+    border-image: initial;
+}
+
+fieldset + fieldset {
+    margin-block-start: var(--vui-global-gap);
+}
+
+fieldset + *:not(fieldset) {
+    margin-block-start: var(--vui-global-gap);
+}
+
+label {
+    padding: var(--vui-global-padding);
+    gap: var(--vui-global-gap--medium);
+}
+
+label + label {
+    margin-top: var(--vui-global-gap);
+}
+
+label + fieldset {
+    margin-top: var(--vui-global-gap);
+}
+
+label > span {
+    color: var(--vui-global-font-color);
+    font-size: 0.85rem;
+}
+
+label:has([type="text"]),
+label:has(textarea) {
+    display: grid;
+}
+
+input[type="text"] {
+    border: 1px solid var(--vui-global-muted-color);
+    border-radius: var(--vui-global-inner-border-radius);
+    padding: var(--vui-global-inner-padding);
+}
+
+label:has([type="checkbox"]),
+label:has([type="number"]),
+label:has(select) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+label:has([type="radio"]) {}
+
+label:has([type="range"]) {}
+
+label:has([type="color"]) {}
+
+label:has([type="file"]) {}
+
+label:has([type="submit"]) {}
+
+label:has([type="reset"]) {}
+
+button {
+    width: 100%;
+    border-radius: var(--vui-global-inner-border-radius);
+    border: 1px solid var(--vui-global-muted-color);
+    background: transparent;
+    cursor: pointer;
+    color: var(--vui-global-font-color);
+    padding: var(--vui-global-gap--medium) var(--vui-global-gap);
+}
+
+button:hover {
+    background: var(--vui-global-muted-color);
+}
