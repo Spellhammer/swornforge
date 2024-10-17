@@ -50,6 +50,20 @@
                     <span>Custom Type Name</span>
                     <input type="text" x-model="options.customType">
                 </label>
+                <fieldset>
+                    <legend>Fill-ins</legend>
+                    <template x-for="(fillIn, index) in options.fillIns">
+                        <fieldset>
+                            <legend>Fill-in</legend>
+                            <label class="control">
+                                <span>Fill-in Title</span>
+                                <input type="text" x-model="fillIn.title">
+                            </label>
+                            <button @click="options.fillIns.splice(index, 1)">Remove</button>
+                        </fieldset>
+                    </template>
+                    <button @click="options.fillIns.push({title: 'Fill-in:'})">Add Fill-in</button>
+                </fieldset>
             </fieldset>
             <fieldset>
                 <legend>Power List</legend>
@@ -93,7 +107,9 @@
                     </div>
                     <div class="asset-card__body">
                         <p class="asset-card__title" x-text="options.assetName">Cave Lion</p>
-                        <p class="asset-card__fillin-wrapper" x-show="options.name">Name:</p>
+                        <template x-for="fillIn in options.fillIns">
+                            <p class="asset-card__fillin-wrapper" x-text="fillIn.title"></p>
+                        </template>
                         <div class="asset-card__description-wrapper" x-show="options.description !== ''">
                             <p x-text="options.description">Your cat takes down its prey.</p>
                         </div>

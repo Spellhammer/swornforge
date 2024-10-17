@@ -13,7 +13,7 @@ let swornForgeAssetCreator = function() {
         },
         options: {
             assetName: "Cave Lion",
-            name: true,
+            fillIns: [],
             description: "Your cat takes down its prey.",
             track: true,
             trackMax: 5,
