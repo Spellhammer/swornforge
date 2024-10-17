@@ -1,7 +1,7 @@
 :root {
     /* Numbers */
-    --vui-global-outer-padding: 8px;
-    --vui-global-inner-padding: 4px;
+    --vui-global-outer-padding: 12px;
+    --vui-global-inner-padding: 8px;
     --vui-global-outer-border-radius: 8px;
     --vui-global-inner-border-radius: 4px;
     --vui-global-gap: 16px;
@@ -9,13 +9,14 @@
     --vui-global-gap--small: 4px;
 
     /* Colors */
+    --vui-background-color: white;
     --vui-global-font-color: black;
-    --vui-global-muted-color: #cecece;
+    --vui-global-muted-color: #e0e0e0;
+    --vui-global-muted-color--dark: #bfbfbf;
 }
 
 fieldset {
     display: grid;
-    gap: var(--vui-global-gap--medium);
     margin-inline-start: var(--vui-global-gap--small);
     margin-inline-end: var(--vui-global-gap--small);
     padding-block-start: var(--vui-global-outer-padding);
@@ -28,6 +29,7 @@ fieldset {
     border-style: groove;
     border-color: var(--vui-global-muted-color);
     border-image: initial;
+    background-color: white;
 }
 
 fieldset + fieldset {
@@ -43,8 +45,14 @@ label {
     gap: var(--vui-global-gap--medium);
 }
 
+label:first-of-type {
+    padding-bottom: var(--vui-global-gap)
+}
+
 label + label {
-    margin-top: var(--vui-global-gap);
+    border-top: 1px solid var(--vui-global-muted-color);
+    padding-top: var(--vui-global-gap);
+    padding-bottom: var(--vui-global-gap);
 }
 
 label + fieldset {

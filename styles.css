@@ -114,6 +114,8 @@
   .controls {
     width: 350px;
     display: grid;
+    padding: 32px;
+    background: #efefef;
   }
 
   /* Controls
