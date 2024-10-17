@@ -55,7 +55,9 @@ label + label {
     padding-bottom: var(--vui-global-gap);
 }
 
-label + fieldset {
+label + fieldset,
+details + label,
+label + button {
     margin-top: var(--vui-global-gap);
 }
 
@@ -108,4 +110,20 @@ button {
 
 button:hover {
     background: var(--vui-global-muted-color);
+}
+
+details {
+    cursor: pointer;
+}
+
+details > fieldset {
+    padding-block-start: 0;
+    padding-inline-end: 0;
+    padding-block-end: 0;
+    padding-inline-start: 0;
+    border: none;
+}
+
+details > fieldset > legend {
+    display: none;
 }

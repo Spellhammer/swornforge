@@ -67,35 +67,58 @@
             </fieldset>
             <fieldset>
                 <legend>Power List</legend>
-                <div class="repeater-container">
-                    <template x-for="(power, index) in powers">
-                        <fieldset>
-                            <legend>Power</legend>
-                            <label class="control">
-                                <span>Power Title</span>
-                                <input type="text" x-model="power.title">
-                            </label>
-                            <label class="control">
-                                <span>Unlocked</span>
-                                <input type="checkbox" x-model="power.unlocked">
-                            </label>
-                            <label class="control--vertical">
-                                <span>Power Description</span>
-                                <textarea x-model="power.description"></textarea>
-                            </label>
-                            <label>
-                                <span>Fill-in</span>
-                                <input type="checkbox" x-model="power.fillin">
-                            </label>
-                            <label x-show="power.fillin">
-                                <span>Fill-in Title</span>
-                                <input type="text" x-model="power.fillinTitle">
-                            </label>
-                            <button x-on:click="powers.splice(index, 1)">Remove</button>
-                        </fieldset>
-                    </template>
-                    <button @click="powers.push({title: 'New Power', unlocked: false, description: 'Something awesome that this power does.'})">Add Power</button>
-                </div>
+                <template x-for="(power, index) in powers">
+                    <fieldset>
+                        <legend>Power</legend>
+                        <label class="control">
+                            <span>Power Title</span>
+                            <input type="text" x-model="power.title">
+                        </label>
+                        <label class="control">
+                            <span>Unlocked</span>
+                            <input type="checkbox" x-model="power.unlocked">
+                        </label>
+                        <label class="control--vertical">
+                            <span>Power Description</span>
+                            <textarea x-model="power.description"></textarea>
+                        </label>
+                        <details>
+                            <summary>Sub-powers / Options</summary>
+                            <fieldset>
+                                <legend>Sub-powers / Options</legend>
+                                <template x-for="(subpower, index) in power.powers">
+                                    <fieldset>
+                                        <legend>Sub-power/Option</legend>
+                                        <label class="control">
+                                            <span>Subpower Title</span>
+                                            <input type="text" x-model="subpower.title">
+                                        </label>
+                                        <label class="control">
+                                            <span>Unlocked</span>
+                                            <input type="checkbox" x-model="subpower.unlocked">
+                                        </label>
+                                        <label class="control--vertical">
+                                            <span>Subpower Description</span>
+                                            <textarea x-model="subpower.description"></textarea>
+                                        </label>
+                                        <button x-on:click="power.powers.splice(index, 1)">Remove</button>
+                                    </fieldset>
+                                </template>
+                                <button @click="power.powers.push({title: 'New Subpower', unlocked: false, description: 'Something awesome that this subpower does.'})">Add Subpower</button>
+                            </fieldset>
+                        </details>
+                        <label>
+                            <span>Fill-in</span>
+                            <input type="checkbox" x-model="power.fillin">
+                        </label>
+                        <label x-show="power.fillin">
+                            <span>Fill-in Title</span>
+                            <input type="text" x-model="power.fillinTitle">
+                        </label>
+                        <button x-on:click="powers.splice(index, 1)">Remove</button>
+                    </fieldset>
+                </template>
+                <button @click="powers.push({title: 'New Power', unlocked: false, description: 'Something awesome that this power does.'})">Add Power</button>
             </fieldset>
         </div>
         <div class="asset-card-wrapper">
@@ -117,6 +140,11 @@
                             <template x-for="power in powers">
                                 <li :class="{unlocked: power.unlocked}">
                                     <strong x-text="power.title"></strong><span x-html="' ' +transformers.italicizeMoveNames(power.description, moves)"></span>
+                                    <ul x-show="power.powers.length > 0">
+                                        <template x-for="subpower in power.powers">
+                                            <li :class="{unlocked: subpower.unlocked}"><strong x-text="subpower.title"></strong><span x-html="' ' +transformers.italicizeMoveNames(subpower.description, moves)"></span></li>
+                                        </template>
+                                    </ul>
                                     <br x-show="power.fillin">
                                     <p class="asset-card__fillin-wrapper" x-show="power.fillin" x-text="power.fillinTitle"></p>
                                 </li>
